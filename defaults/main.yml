@@ -1,0 +1,20 @@
+---
+roasariosis_host     : "127.0.0.1"
+roasariosis_db       : "rosariosis"
+roasariosis_db_user  : "rosariosis"
+roasariosis_db_pass  : "rosariosis"
+roasariosis_www      : "/var/www/rosariosis"
+roasariosis_user     : "www-data"
+roasariosis_git      : "https://github.com/ahelal/rosariosis.git"
+roasariosis_fqdn     : "openfedena.cloudapp.net"
+roasariosis_lang     :
+            - code   : "en_US.utf8"
+              apt    : "language-pack-en"
+
+            - code   : "ar_EG.utf8"
+              apt    : "language-pack-ar"
+
+            - code   : "de_DE.utf8"
+              apt    : "language-pack-de"
+
+roasariosis_symbol   : '€'
