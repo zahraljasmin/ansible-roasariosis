@@ -53,7 +53,6 @@
     src=config.inc.php.j2
     dest={{roasariosis_www}}/config.inc.php
     mode=0644
-  tags: deploy
   notify: restart apache2
 
 - name: Run SQL install
@@ -66,14 +65,12 @@
     a2enmod ssl
   register: SSL
   changed_when: "'Enabling module ssl' in SSL.stdout"
-  tags: apache2
   notify: restart apache2
 
 - name: roasariosis | Deploy default apache site
   template:
     src=default.j2
     dest=/etc/apache2/sites-available/default
-  tags: apache2
   notify: restart apache2
 
 - name: roasariosis | Enable default apache site
@@ -81,6 +78,31 @@
     src=/etc/apache2/sites-available/default
     dest=/etc/apache2/sites-enabled/000-default
     state=link
-  tags: apache2
   notify: restart apache2
+
+- name: roasariosis | Download wkhtmlpdf
+  get_url:
+    url: "{{wkhtmlpdf_url}}"
+    dest: "/tmp/{{wkhtmlpdf_files}}"
+  register: wkhtmlpdf_reg
+  tags: xxx
+
+- name: roasariosis | unarchive wkhtmlpdf
+  shell:
+    mkdir /tmp/wkhtmltopdf && tar xvf /tmp/{{wkhtmlpdf_files}} -C /tmp/wkhtmltopdf --strip-components=1
+  when: wkhtmlpdf_reg | changed
+  tags: xxx
+
+- name: roasariosis | move wkhtmlpdf bin 
+  command:
+    mv /tmp/wkhtmltopdf/bin/{{wkhtmlpdf_bin}} /usr/bin/{{wkhtmlpdf_bin}}
+  when: wkhtmlpdf_reg | changed
+  tags: xxx
+
+- name: roasariosis | Executable
+  file:
+    path: "/usr/bin/{{wkhtmlpdf_bin}}"
+    mode: 0755
+  when: wkhtmlpdf_reg | changed
+  tags: xxx
 

@@ -18,3 +18,7 @@ roasariosis_lang     :
               apt    : "language-pack-de"
 
 roasariosis_symbol   : '€'
+
+wkhtmlpdf_files      : "wkhtmltox-0.12.1-f6f29b0.tar.xy"
+wkhtmlpdf_bin        : "wkhtmltopdf"
+wkhtmlpdf_url        : "http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1-dev/wkhtmltox-0.12.1-f6f29b0_linux-wheezy-amd64.tar.xz?r=http%3A%2F%2Fwkhtmltopdf.org%2Fdownloads.html&ts=1397983118&use_mirror=skylink"
