@@ -7,12 +7,12 @@
 <VirtualHost _default_:443>
 	ServerAdmin webmaster@{{roasariosis_fqdn}}
 
-	DocumentRoot /var/www
+	DocumentRoot {{roasariosis_www}}
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory /var/www/>
+	<Directory {{roasariosis_www}}>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride None
 		Order allow,deny
@@ -53,8 +53,8 @@
 	#   /usr/share/doc/apache2.2-common/README.Debian.gz for more info.
 	#   If both key and certificate are stored in the same file, only the
 	#   SSLCertificateFile directive is needed.
-	SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
-	SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+	SSLCertificateFile    {{roasariosis_ssl_cert}}
+	SSLCertificateKeyFile {{roasariosis_ssl_key}}
 
 	#   Server Certificate Chain:
 	#   Point SSLCertificateChainFile at a file containing the

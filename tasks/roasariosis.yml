@@ -10,8 +10,8 @@
   apt: pkg="{{item}}" state=present
   with_items:
     - git
+    - postgresql
     - postgresql-9.1
-    - postgresql-9.1-postgis
     - postgresql-contrib
     - python-psycopg2
     - apache2
@@ -29,6 +29,7 @@
   git:
     repo={{roasariosis_git}}
     dest="{{roasariosis_www}}"
+    version="mobile"
   sudo_user: "{{roasariosis_user}}"
 
 - name: roasariosis | Create postgresql user
@@ -72,6 +73,7 @@
     src=default.j2
     dest=/etc/apache2/sites-available/default
   notify: restart apache2
+  when: roasariosis_www_manage
 
 - name: roasariosis | Enable default apache site
   file:
@@ -85,24 +87,19 @@
     url: "{{wkhtmlpdf_url}}"
     dest: "/tmp/{{wkhtmlpdf_files}}"
   register: wkhtmlpdf_reg
-  tags: xxx
 
 - name: roasariosis | unarchive wkhtmlpdf
   shell:
     mkdir /tmp/wkhtmltopdf && tar xvf /tmp/{{wkhtmlpdf_files}} -C /tmp/wkhtmltopdf --strip-components=1
   when: wkhtmlpdf_reg | changed
-  tags: xxx
 
 - name: roasariosis | move wkhtmlpdf bin 
   command:
     mv /tmp/wkhtmltopdf/bin/{{wkhtmlpdf_bin}} /usr/bin/{{wkhtmlpdf_bin}}
   when: wkhtmlpdf_reg | changed
-  tags: xxx
 
 - name: roasariosis | Executable
   file:
     path: "/usr/bin/{{wkhtmlpdf_bin}}"
     mode: 0755
   when: wkhtmlpdf_reg | changed
-  tags: xxx
-
